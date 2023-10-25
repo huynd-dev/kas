@@ -1,0 +1,13 @@
+---
+# tasks file for kas
+---
+
+# tasks file for install_edr
+
+- name: Install EDR on Centos 7.6
+  include: centos_7_6.yml
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
+
+- name: Install EDR on Ubuntu 18.04
+  include: ubuntu_18_04.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version == '18'

@@ -1,0 +1,54 @@
+---
+- name: Create directory tempolary Kaspersky
+  file:
+          path: /tmp/kaspersky
+          state: directory
+
+- name: Copy source RPM Kaspersky Endpoint Security 11 to remote Server
+  copy:
+          src: kesl-11.2.0-4528.x86_64.rpm
+          dest: /tmp/kaspersky/kesl-11.2.0-4528.x86_64.rpm
+          mode: 0755
+
+- name: Copy file config Kaspersky Endpoint Security 11 to remote Server
+  template:
+          src: kesl.ini.j2
+          dest: /tmp/kaspersky/kesl.ini
+          mode: 0755
+
+- name: Copy source RPM KL Agent Network to remote Server
+  copy:
+          src: klnagent64-11.0.0-38.x86_64.rpm
+          dest: /tmp/kaspersky/klnagent64-11.0.0-38.x86_64.rpm
+          mode: 0755
+
+- name: Copy file config KL Agent Network to remote Server
+  template:
+          src: klagent.txt.j2
+          dest: /tmp/kaspersky/klagent.txt
+          mode: 0755
+
+- name: Install Kaspersky Endpoint Security 11
+  yum:
+          name: /tmp/kaspersky/kesl-11.2.0-4528.x86_64.rpm
+          state: present
+
+- name: Install Network Agent
+  yum:
+          name: /tmp/kaspersky/klnagent64-11.0.0-38.x86_64.rpm
+          state: present
+
+- name: Automatic initial configuration of Kaspersky Endpoint Security
+  shell: "/opt/kaspersky/kesl/bin/kesl-setup.pl --autoinstall=/tmp/kaspersky/kesl.ini"
+
+- name: Installing Network Agent for Linux in silent mode (with an answer file)
+  shell: "export KLAUTOANSWERS=/tmp/kaspersky/klagent.txt && /opt/kaspersky/klnagent64/lib/bin/setup/postinstall.pl"
+
+- name: Checking Kaspersky after setting
+  command: "/opt/kaspersky/klnagent64/bin/klnagchk"
+  register: result
+  ignore_errors: no
+
+- name: Print Checking Kaspersky after setting
+  debug:
+          var: result
