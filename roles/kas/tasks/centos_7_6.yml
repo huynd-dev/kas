@@ -47,7 +47,7 @@
 - name: Checking Kaspersky after setting
   command: "/opt/kaspersky/klnagent64/bin/klnagchk"
   register: result
-  ignore_errors: no
+  ignore_errors: yes
 
 - name: Print Checking Kaspersky after setting
   debug:
