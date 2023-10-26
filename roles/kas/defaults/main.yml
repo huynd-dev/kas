@@ -1,2 +1,3 @@
 ---
 # defaults file for kas
+klagent_server: 10.169.20.226
