@@ -1,1 +1,1 @@
-# kas
+Kaspersky Endpoint Security 12.0 for Linux ("Kaspersky Endpoint Security," "application") protects devices running Linux operating systems against various types of threats, including network and scam attacks. You can use Kaspersky Endpoint Security as part of Kaspersky Security for Virtualization Light Agent to protect virtual machines running Linux guest operating systems.
